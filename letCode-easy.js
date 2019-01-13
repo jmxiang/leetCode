@@ -112,7 +112,6 @@ var isPalindrome = function(x) {
 /**
  13. 罗马数字转整数
  罗马数字包含以下七种字符: I， V， X， L，C，D 和 M。
-
 字符          数值
 I             1
 V             5
@@ -152,7 +151,6 @@ C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
 输入: "MCMXCIV"
 输出: 1994
 解释: M = 1000, CM = 900, XC = 90, IV = 4.
-结果：执行用时: 164 ms, 在Roman to Integer的JavaScript提交中击败了92.82% 的用户
 */
 // 解法1：思路见注释（不作是否是罗马数字的判断等非法情况的处理）
 var romanToInt = function(s) {
