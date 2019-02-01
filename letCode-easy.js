@@ -1,4 +1,4 @@
-//letcode中简单算法题的JavaScript解法记录  算法学习中...仅供记录
+//letcode中简单算法题的JavaScript解法记录  算法学习中...仅供记录，如有错误烦请指正。
 
 //1、两数之和
 /*
@@ -168,6 +168,46 @@ var romanToInt = function(s) {
             // 如果当前是倒数第二个字母，则还要再加上最后字母对应的数字
            returnNumber+=theRule[s[i]]+(i==s.length-2?theRule[s[i+1]]:0)
         }
-    }
+    } 
     return returnNumber;
+};
+
+/**
+ 14.最长公共前缀
+编写一个函数来查找字符串数组中的最长公共前缀。
+
+如果不存在公共前缀，返回空字符串 ""。
+
+示例 1:
+
+输入: ["flower","flow","flight"]
+输出: "fl"
+示例 2:
+
+输入: ["dog","racecar","car"]
+输出: ""
+解释: 输入不存在公共前缀。
+说明:
+
+所有输入只包含小写字母 a-z 。
+
+在不考虑容错的情况下
+解法1：任取一个 传入的字符串数组成员，这里取下标为0的，由于公共前缀 最长的情况 就是一个完整的字符串，
+    所以从下标0 开始 截取取此字符串，通过indexOf是否等于0 判断 是否是后续字符串的前缀，
+    一旦不等于0，return 结束循环及函数
+    如果循环结束还没有return 的话，表示数组成员都是相同的，返回下标为0的元素即可
+ */
+var longestCommonPrefix = function(strs) {
+    if(strs.length==0||strs[0]=='') return '';
+    if(strs.length==1) return strs[0];
+    for(let i=1;i<=strs[0].length;i++){
+        let pStr=strs[0].substr(0,i);
+        for(let j=1;j<strs.length;j++){
+            if(strs[j].length==0) return '';
+            if(strs[j].indexOf(pStr)!=0){
+                return strs[0].substr(0,Math.max(0,i-1))
+            }
+        } 
+    }
+    return strs[0]
 };
