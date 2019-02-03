@@ -243,10 +243,10 @@ var longestCommonPrefix = function(strs) {
     输出: true
 
     解法1：（本解法同letcode官方）
-        1.针对集中特殊情况做处理，免除语法错误以及不必要的循环。
+        1.针对几种特殊情况做处理，免除语法错误以及不必要的循环。
         2.从下标 0 开始 遍历传参 s ,
-            如果碰到‘(’,'['.'{'，push进数组 arr 。
-            如果碰到‘)’,']'.'}'，判断 是否和 arr 最后一位是同类型括号：
+            如果碰到‘(’,'[','{'，push进数组 arr 。
+            如果碰到‘)’,']','}'，判断 是否和 arr 最后一位是同类型括号：
                 是：删除 arr 最后一位。
                 否：不是有效括号，return false 结束函数。
         2.遍历完后如果数组还有值，表示不是有效括号
@@ -287,4 +287,104 @@ var isValid = function(s) {
         }
     }
     return arr.length===0?true:false; 
+};
+
+/**
+ * 28. 实现strStr()
+ * 实现 strStr() 函数。（我这里理解为 JaveScript中indexOf()）
+
+    给定一个 haystack 字符串和一个 needle 字符串，在 haystack 字符串中找出 needle 字符串出现的第一个位置 (从0开始)。如果不存在，则返回  -1。
+
+    示例 1:
+
+    输入: haystack = "hello", needle = "ll"
+    输出: 2
+    示例 2:
+
+    输入: haystack = "aaaaa", needle = "bba"
+    输出: -1
+    说明:
+
+    当 needle 是空字符串时，我们应当返回什么值呢？这是一个在面试中很好的问题。
+
+    对于本题而言，当 needle 是空字符串时我们应当返回 0 。这与C语言的 strstr() 以及 Java的 indexOf() 定义相符。
+
+    解法1：
+        从 下标 0 开始 截取 haystack 字符串，长度为 needle 字符串的长度，对比两张是否相等。
+            停止截取的下标 为 倒数第 needle.length 位，因为再往后截取的长度就小于 needle 的长度了，无意义。
+        所以需要 处理特殊情况  1.haystack 字符串长度小于 needle ,返回-1。
+                            2. haystack===needle，返回0。
+ */
+/**
+ * @param {string} haystack
+ * @param {string} needle
+ * @return {number}
+ */
+var strStr = function(haystack, needle) {
+    if(haystack.length<needle.length) return -1;
+    if(needle=='') return 0;
+    let strLength=haystack.length-needle.length+1;//最多的循环(截取)次数
+    for(let i=0;i<strLength;i++){
+        let strPart=haystack.substr(i,needle.length);
+        console.log('strPart',strPart);
+        console.log('needle',needle);
+        if(strPart===needle) return i;
+    }
+    return -1;
+};
+/**
+ * 35.搜索插入位置
+ * 给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
+
+    你可以假设数组中无重复元素。
+
+    示例 1:
+
+    输入: [1,3,5,6], 5
+    输出: 2
+    示例 2:
+
+    输入: [1,3,5,6], 2
+    输出: 1
+    示例 3:
+
+    输入: [1,3,5,6], 7
+    输出: 4
+    示例 4:
+
+    输入: [1,3,5,6], 0
+    输出: 0
+
+
+ */
+/**
+ * 解法1：从 下标0 开始 一个个比较。这里不贴代码
+ */
+/**
+ * 解法2：二分查找。
+ *  target 大于 数组中间数时，将比较范围缩小到数组前半段，反之 缩小到后半段，相等的话 就是返回当前下标即可。
+ *  
+ *  
+ */
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var searchInsert = function(nums, target) {
+    if(nums.length===0) return 0;
+    let [firstIndex,lastIndex]=[0,nums.length];
+    while(firstIndex<lastIndex){
+        let mid=firstIndex+Math.floor((lastIndex-firstIndex)/2);
+        // console.log('nums[firstIndex-1]',nums[firstIndex-1]);
+        // console.log('nums[firstIndex]',nums[firstIndex]);
+        if(nums[mid]<target){
+            firstIndex=mid+1;//+1 是为了lastIndex-firstIndex==1时 firstIndex 值能变动
+        } else if(nums[mid]>target){
+            lastIndex=mid
+        }else{
+            return mid
+        }
+    }
+    return firstIndex;
 };
