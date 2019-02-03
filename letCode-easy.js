@@ -211,3 +211,80 @@ var longestCommonPrefix = function(strs) {
     }
     return strs[0]
 };
+    /**
+     * 20.有效的括号
+     * 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+
+    有效字符串需满足：
+
+    左括号必须用相同类型的右括号闭合。
+    左括号必须以正确的顺序闭合。
+    注意空字符串可被认为是有效字符串。
+
+    示例 1:
+
+    输入: "()"
+    输出: true
+    示例 2:
+
+    输入: "()[]{}"
+    输出: true
+    示例 3:
+
+    输入: "(]"
+    输出: false
+    示例 4:
+
+    输入: "([)]"
+    输出: false
+    示例 5:
+
+    输入: "{[]}"
+    输出: true
+
+    解法1：（本解法同letcode官方）
+        1.针对集中特殊情况做处理，免除语法错误以及不必要的循环。
+        2.从下标 0 开始 遍历传参 s ,
+            如果碰到‘(’,'['.'{'，push进数组 arr 。
+            如果碰到‘)’,']'.'}'，判断 是否和 arr 最后一位是同类型括号：
+                是：删除 arr 最后一位。
+                否：不是有效括号，return false 结束函数。
+        2.遍历完后如果数组还有值，表示不是有效括号
+    * 
+    */
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var isValid = function(s) {
+    let arr=[];
+    if(s=='') return true;
+    if(s.length<2) return false;
+    let sLength=s.length-1;
+    if(s[0]==')'||s[0]==']'||s[0]=='}'||s[sLength]=='('||s[sLength]=='['||s[sLength]=='{') return false;
+    for(let i=0;i<s.length;i++){
+        if(s[i]=='('||s[i]=='['||s[i]=='{'){
+            arr.push(s[i]);
+        }else {
+            switch(s[i])
+            {
+                case ')':if(arr[arr.length-1]=='('){
+                    arr.pop();
+                }  else{
+                    return false
+                };break;
+                case ']':if(arr[arr.length-1]=='['){
+                    arr.pop();
+                }  else{
+                    return false
+                };break;
+                case '}':if(arr[arr.length-1]=='{'){
+                    arr.pop();
+                }  else{
+                    return false
+                };break;
+            }
+        }
+    }
+    return arr.length===0?true:false; 
+};
